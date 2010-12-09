@@ -1,5 +1,7 @@
 # iRail
 
+THIS IS THE REWRITE BRANCH. UNDER CONSTRUCTION!
+
 This is the iRail Git repo.
 
 iRail is an attempt to make transportation time schedules easily available for anyone. 
