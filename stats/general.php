@@ -3,6 +3,7 @@
 // Gives report about all days report
 // include vars
 include("../../includes/dbConfig.php");
+
 $filter = "";
 if (isset($_GET['filter'])) {
     $filter = mysql_escape_string($_GET['filter']);
@@ -93,5 +94,10 @@ try {
             }
             echo '</table>';
         ?>
+        
+<?php
+	include("../../includes/googleAnalytics.php");
+?>
+
     </body>
 </html>
