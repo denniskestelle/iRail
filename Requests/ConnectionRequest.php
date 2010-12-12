@@ -1,16 +1,12 @@
 <?php
-
 /**
  * This is the data structure for a request. If we get more arguments, we will be able to add those here.
  *
  * @author pieterc
  */
-ini_set("include_path", ".:../:api/DataStructs:DataStructs:api/:../includes:includes");
 include_once("Request.php");
 include_once("InputHandlers/BRailConnectionInput.php");
 include_once("InputHandlers/NSConnectionInput.php");
-include_once("OutputHandlers/JSONConnectionOutput.php");
-include_once("OutputHandlers/XMLConnectionOutput.php");
 
 class ConnectionRequest extends Request {
     private $results;
@@ -24,7 +20,7 @@ class ConnectionRequest extends Request {
         parent::__construct($format, $lang);
         if($from == "" || $to == ""){
             throw new Exception("No stations specified");
-        }//TODO: check on input
+        }
         $this->results = $results;
         $this->from = $from;
         $this->to = $to;
@@ -67,16 +63,6 @@ class ConnectionRequest extends Request {
             return new BRailConnectionInput();
         }else{
             return new NSConnectionInput();
-        }
-    }
-    
-    public function getOutput($connections){
-        if(parent::getFormat() == "xml"){
-            return new XMLConnectionOutput(parent::getLang(), $connections);
-        }else if(parent::getFormat() == "json"){
-            return new JSONConnectionOutput(parent::getLang(), $connections);
-        }else{
-            throw new Exception("No outputformat specified");
         }
     }
     

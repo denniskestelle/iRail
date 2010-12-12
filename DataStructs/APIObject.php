@@ -1,4 +1,11 @@
 <?
+/**
+ * This is part of our datastruct model
+ *
+ * It is a final object of 
+ *
+ * @package DataStructs
+ */
 include_once "APIAbstractObject.php";
 class APIObject extends APIAbstractObject{
      private $isAttr;
