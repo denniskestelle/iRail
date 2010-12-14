@@ -5,6 +5,8 @@
  *
  * @author pieterc
  */
+include_once("../DataStructs/APIList.php");
+include_once("../DataStructs/APIObject.php");
 abstract class Input {
      private $request;
 
@@ -16,17 +18,29 @@ abstract class Input {
 	  return $request;
      }
 
-    public abstract function execute();
-    
+     public abstract function execute();
 
-    /** HELPER FUNCTIONS
+     protected function makeStationFromHafasId($hafasId){
+	  //get station from Station Input handlers from database
+//TODO
+	  return new APIList("station");
+     }    
+
+     protected function makeTimeFromHafas($hafastime,$hafasdate){
+	  $time = new APIList("time");
+	  $time -> add(new APIObject("unixtime",$this->transformTime($hafastime,$hafasdate)), true);
+	  $time -> add(new APIObject("formatted",date("Y-m-d\TH:i:s\Z",$this->transformTime($hafastime,$hafasdate))));
+	  return $time;
+     }
+
+    /** 
      *
      * @param <type> $time -> in 00d15:24:00
      * @param <type> $date -> in 20100915
      * @return seconds since the Unix epoch
      *
      */
-    protected static function transformTime($time, $date) {
+    private function transformTime($time, $date) {
         date_default_timezone_set("Europe/Brussels");
         $dayoffset = intval(substr($time,0,2));
         $hour = intval(substr($time, 3, 2));
@@ -37,12 +51,13 @@ abstract class Input {
         $day = intval(substr($date,6,2));
         return mktime($hour, $minute, $second, $month, $day + $dayoffset, $year);
     }
+    
     /**
      * This function transforms the brail formatted timestring and reformats it to seconds
      * @param int $time
      * @return int Duration in seconds
      */
-    protected static function transformDuration($time) {
+    private function transformDuration($time) {
         $days = intval(substr($time, 0,2));
         $hour = intval(substr($time, 3, 2));
         $minute = intval(substr($time, 6,2));

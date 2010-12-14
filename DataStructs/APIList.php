@@ -14,7 +14,7 @@ class APIList extends APIAbstractObject implements Iterator{
      private $array = array();
      private $position = 0;
      private $size = 0;
-
+     private $defaultKey;
      public function __construct($key, $array = null){
 	  parent::key = $key;
 	  $this->position = 0;
@@ -22,17 +22,32 @@ class APIList extends APIAbstractObject implements Iterator{
 	  $this->array = $array;
      }
 
+     public function setDefaultKey($key){
+	  $this->defaultKey = $key;
+     }
+
+/**
+ * A default key is the key to the value that will be the XML tag's content
+ * For instance for Station, this is name
+ */
+     public function getDefaultKey(){
+	  return $this->defaultKey;
+     }
+     
      public function getSize(){
 	  return $size;
      }
 
-     public function add(APIAbstractObject $aao){
+     public function add(APIAbstractObject $aao, $defaultKey = false){
+	  if($defaultKey){
+	       $this->defaultKey = $aao -> getKey();
+	  }
 	  $this->array[$size] = $aao;
 	  $size ++;
      }
 
 /**
- * This is an O(n) method!
+ * This is an O(n) method! Try to avoid it!
  */
      public function getValue($key){
 	  $i = 0;

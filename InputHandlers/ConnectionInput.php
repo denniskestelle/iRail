@@ -5,15 +5,7 @@
  * @author pieterc
  */
 include_once("Input.php");
-include_once("../../DataStructs/APIObject.php");
-include_once("../../DataStructs/APIList.php");
 abstract class ConnectionInput extends Input {
-
-     protected function makeStation($hafasId){
-	  //get station from Station Input handlers from database
-//TODO
-	  return new APIList("station");
-     }
      
      protected function makeConnection($departure, $arrival, $duration, $vias){
 	  $connection = new APIList("connection");
@@ -24,11 +16,22 @@ abstract class ConnectionInput extends Input {
 	  return $connection;
      }
 
-     protected function makeVia($departure,$arrival,$station){
+     protected function makeVia($departure,$arrival,$station, $vehicle, $timebetween){
 	  $via = new APIList("via");
-	  
+	  $via -> add($departure);
+	  $via -> add($arrival);
+	  $via -> add($station);
+	  $via -> add($vehicle);
+	  $via -> add($timebetween);
+	  return $via;
      }
      
+     protected function makeViaNode($arrdep,$platform,$time){
+	  $vianode = new APIList($arrdep);
+	  $vianode -> add($platform);
+	  $vianode -> add($time);
+	  return $vianode;
+     }     
 
      /**
       * This is an arrival or departure in connections

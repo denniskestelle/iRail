@@ -8,6 +8,19 @@ ini_set("include_path", ".:../:api/DataStructs:DataStructs:api/:../includes:incl
 include_once("Input.php");
 
 class StationsInput extends Input {
+     private static $s = null;
+
+     private function __construct(){
+	  //load csv file in memory
+
+     }
+
+     public static function getInstance(){
+	  if($s == null){
+	       $s = new StationsInput();
+	  }
+	  return $s;
+     }
 
      public static function fetchStation(){
 	  
@@ -27,7 +40,8 @@ class StationsInput extends Input {
 /**
  * TODO: rewrite this function
  */
-    public static function getStationFromId($id, $request) {
+    public static function getStationFromId($id) {
+
         throw new Exception("No station for station id found (getStationFromId)", 3);
     }
 

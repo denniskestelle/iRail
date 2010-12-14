@@ -18,6 +18,7 @@ abstract class Request {
 	  $this->format = strtoupper($format);
 	  $this->lang = strtoupper($lang);
      }
+
      /**
       *Should be rewritten to something more logical. Searching for the domainname's extension is crazy...
       * @return countrycode
